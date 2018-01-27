@@ -27,7 +27,7 @@ class Client extends JFrame {
     private JTextField phoneField;
     private JTextField addressField;
     private JPanel placeOrderPanel;
-    private HashMap<MenuItem, Integer> orderItems = new HashMap();
+    private HashMap<MenuItem, Integer> orderItems;
     private StringBuilder orderDetails;
 
 
@@ -74,10 +74,10 @@ class Client extends JFrame {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
     }
 
     private void getMenu() {
+        orderItems = new HashMap();
         sendData("Get menu");
         try {
             //getting the menu items from the server
