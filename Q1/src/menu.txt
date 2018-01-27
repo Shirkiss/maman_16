@@ -1,0 +1,14 @@
+1,0,Green tehina,36
+2,0,Roasted eggplant in tehina,29
+3,0,Avocado salad,30
+4,0,Leek patties,32
+5,1,Majadara rice (v),38
+6,1,Givetch with rice (v),46
+7,1,Meat balls with rice,51
+8,2,Chocolate cake,34
+9,2,Apple crumble,32
+10,3,Coca Cola,12
+11,3,Soda,10
+12,3,Water,7
+
+
