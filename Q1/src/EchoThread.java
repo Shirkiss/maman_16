@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.Objects;
 
 /**
- * @author Shay Tavor
+ * @author Shir Cohen
  */
 public class EchoThread extends Thread {
     private final List<MenuItem> MenuItems;

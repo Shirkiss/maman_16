@@ -5,14 +5,14 @@ import java.awt.*;
 /**
  * Created by shir.cohen on 1/27/2018.
  */
-public class MenuItemPanel extends JPanel{
+public class MenuItemPanel extends JPanel {
 
     private JComboBox qunatityCombo = new JComboBox();
     private int itemId;
     private int itemType;
     private double itemPrice;
     private String itemDescription;
-    static final private String[] types = {"Starter","Main Course","Desert", "Drink"};
+    static final private String[] types = {"Starter", "Main Course", "Desert", "Drink"};
 
 
     public MenuItemPanel(MenuItem menuItem) {
@@ -21,9 +21,9 @@ public class MenuItemPanel extends JPanel{
         this.itemPrice = menuItem.getItemPrice();
         this.itemDescription = menuItem.getItemDescription();
 
-        setLayout(new FlowLayout(FlowLayout.CENTER, 15,0));
+        setLayout(new FlowLayout(FlowLayout.CENTER, 15, 0));
         TitledBorder title;
-        title = BorderFactory.createTitledBorder("#" + String.valueOf(menuItem.getItemId()) +" "+ types[menuItem.getItemType()]);
+        title = BorderFactory.createTitledBorder("#" + String.valueOf(menuItem.getItemId()) + " " + types[menuItem.getItemType()]);
         setBorder(title);
 
 
@@ -38,26 +38,27 @@ public class MenuItemPanel extends JPanel{
         add(qunatityCombo);
     }
 
-    int getItemQuantity(){
+    int getItemQuantity() {
         return (qunatityCombo.getSelectedIndex());
     }
 
-    MenuItem getMenuItem(){
+    MenuItem getMenuItem() {
         return new MenuItem(getItemId(), getItemType(), getItemDescription(), getItemPrice());
     }
 
-    private double getItemPrice() {
+    double getItemPrice() {
         return itemPrice;
     }
 
-    private String getItemDescription() {
+    String getItemDescription() {
         return itemDescription;
     }
 
-    int getItemId(){
+    int getItemId() {
         return itemId;
     }
-    int getItemType(){
+
+    int getItemType() {
         return itemType;
     }
 }
