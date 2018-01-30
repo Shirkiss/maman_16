@@ -13,15 +13,18 @@ import java.util.List;
 import java.util.Objects;
 
 /**
+ * ClientThread.java
+ * Purpose: Open a thread for each client
+ *
  * @author Shir Cohen
  */
-public class EchoThread extends Thread {
+public class ClientThread extends Thread {
     private final List<MenuItem> MenuItems;
     private Socket socket = null;
     private ObjectOutputStream out;
     private ObjectInputStream in;
 
-    EchoThread(Socket s, List<MenuItem> menu) {
+    ClientThread(Socket s, List<MenuItem> menu) {
         this.MenuItems = menu;
         socket = s;
         try {
@@ -51,6 +54,9 @@ public class EchoThread extends Thread {
         }
     }
 
+    /**
+     * Close the connection
+     **/
     private void closeConnection() {
         try {
             System.out.println("Server>> Closing connection");
@@ -58,6 +64,7 @@ public class EchoThread extends Thread {
             in.close();
             socket.close();
         } catch (IOException ioException) {
+            ioException.printStackTrace();
         }
     }
 }

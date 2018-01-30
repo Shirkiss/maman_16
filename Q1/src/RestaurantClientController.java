@@ -6,9 +6,12 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
- * Created by shir.cohen on 1/30/2018.
+ * RestaurantClientController.java
+ * Purpose: the logic behind the Restaurant UI
+ *
+ * @author Shir Cohen
  */
-public class ClientControl {
+class RestaurantClientController {
     private Socket socket = null;
     private ObjectOutputStream out = null;
     private ObjectInputStream in = null;
@@ -16,11 +19,16 @@ public class ClientControl {
     private int portAddress;
 
 
-    ClientControl(String host, int port) {
+    RestaurantClientController(String host, int port) {
         hostAddress = host;
         portAddress = port;
     }
 
+    /**
+     * Get from the server the menu and return it
+     *
+     * @return list of all menu items
+     */
     ArrayList<MenuItem> getMenu() {
         sendData("Get menu");
         try {
@@ -32,30 +40,44 @@ public class ClientControl {
         return null;
     }
 
+    /**
+     * Send a message to the server
+     *
+     * @param message to send to the server
+     */
     private void sendData(String message) {
         try {
             socket = new Socket(hostAddress, portAddress);
             out = new ObjectOutputStream(socket.getOutputStream());
             in = new ObjectInputStream(socket.getInputStream());
-            System.out.println("Client connected to the server");
+            System.out.println("RestaurantClientFrame connected to the server");
 
             out.writeObject(message);
             out.flush();
-            System.out.println("Client>> " + message);
+            System.out.println("RestaurantClientFrame>> " + message);
 
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
+    /**
+     * Send an order to the server
+     *
+     * @param orderItems that contain the menu items and the quantity
+     * @param name of the person that send the order
+     * @param phone of the person that send the order
+     * @param address of which to send the order to
+     * @return true if the order was successfully sent and false otherwise
+     */
     boolean submitOrderItems(HashMap<MenuItem, Integer> orderItems, String name, String phone, String address) {
         sendData("Submit Order");
-        System.out.println("Client>> Submit Order");
+        System.out.println("RestaurantClientFrame>> Submit Order");
         Order order = new Order(orderItems, name, phone, address);
         try {
             out.writeObject(order);
             out.flush();
-            System.out.println("Client>> " + order);
+            System.out.println("RestaurantClientFrame>> " + order);
             return true;
         } catch (IOException e) {
             e.printStackTrace();
@@ -63,6 +85,11 @@ public class ClientControl {
         return false;
     }
 
+    /**
+     * Get the order that was received on the server
+     *
+     * @return the order item
+     */
     Order getOrderDataFromServer() {
         try {
             return (Order) in.readObject();
@@ -72,14 +99,17 @@ public class ClientControl {
         return null;
     }
 
+    /**
+     * Close the connection
+     **/
     void closeConnection() {
         try {
-            System.out.println("Client>> Closing connection");
+            System.out.println("RestaurantClientFrame>> Closing connection");
             out.close();
             in.close();
             socket.close();
         } catch (IOException ioException) {
-            System.out.println("Client>> Failed to close connection");
+            System.out.println("RestaurantClientFrame>> Failed to close connection");
             ioException.printStackTrace();
         }
     }

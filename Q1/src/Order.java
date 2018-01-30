@@ -2,9 +2,15 @@ import java.io.Serializable;
 import java.util.HashMap;
 
 /**
- * Created by shir.cohen on 1/27/2018.
+ * Order.java
+ * An object that represent a restaurant order. .
+ * On each order item there is an HashMap of items and quantity.
+ * Also there is a details on the owner of the order: name, phone and address.
+ * *
+ *
+ * @author Shir Cohen
  */
-public class Order implements Serializable {
+class Order implements Serializable {
 
     private final HashMap<MenuItem, Integer> orderItems;
     private final String name;

@@ -1,88 +1,66 @@
-import javax.swing.*;
-import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.io.EOFException;
+import java.io.File;
 import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
 import java.net.ServerSocket;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.locks.Lock;
-import java.util.concurrent.locks.ReentrantLock;
+import java.net.Socket;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.NoSuchElementException;
+import java.util.Scanner;
 
 /**
- * Created by shir.cohen on 1/25/2018.
+ * RestaurantServer.java
+ * Purpose: Restaurant server to send menu and get orders
+ *
+ * @author Shir Cohen
  */
-public class RestaurantServer extends JFrame {
-    private JTextField enterField;
-    private JTextArea displayArea;
-    private ObjectOutputStream output;
-    private ObjectInputStream input;
-
-    public RestaurantServer() {
-        super("RestaurantServer");
-        enterField = new JTextField();
-        enterField.setEditable(false);
-        enterField.addActionListener(
-                new ActionListener() {
-                    @Override
-                    public void actionPerformed(ActionEvent e) {
-                        sendData(e.getActionCommand());
-                    }
-                }
-        );
-        add(enterField, BorderLayout.NORTH);
-        displayArea = new JTextArea();
-        add(new JScrollPane(displayArea), BorderLayout.CENTER);
-
-        setSize(300,150);
-        setVisible(true);
-    }
-
-//    public void runServer()
-//    {
-//        try {
-//            server = new ServerSocket(7777,100);
-//            while (true)
-//            {
-//                try
-//                {
-//                    waitForConnection();
-//                    getStreams();
-//                    processConnection();
-//                } catch (EOFException eofException)
-//                {
-//                    displayMessage("\nServer terminated connection");
-//                }
-//            }
-//        }
-//    }
-
-    private void sendData(String message)
-    {
-        try
-        {
-            output.writeObject("SERVER>> " +message);
-            output.flush();
-            displayMessage("\nServer >> " + message);
-        }
-        catch (IOException ioException)
-        {
-            displayArea.append("\nError writing object");
+public class RestaurantServer {
+    public static void main(String[] args) {
+        List<MenuItem> menu;
+        //get menu from file
+        menu = getMenuFromFile("C:\\Users\\shir.cohen\\Desktop\\studies\\Java\\maman16\\src\\menu.txt");
+        ServerSocket srv;
+        try {
+            srv = new ServerSocket(3333);
+            System.out.println("Server>> Server ready");
+            Socket socket;
+            while (true) {
+                socket = srv.accept();
+                new ClientThread(socket, menu).start();
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+            System.exit(1);
         }
     }
 
-    private void displayMessage(final String messageToDisplay)
-    {
-        SwingUtilities.invokeLater(
-                new Runnable() {
-                    @Override
-                    public void run() {
-                        displayArea.append(messageToDisplay);
-                    }
-                }
-        );
+    /**
+     * Get a file path and create a list of MenuItems extracted from the file
+     *
+     * @param path A pathname string for the questions file
+     * @return A list of MenuItems extracted from the file
+     */
+    private static List<MenuItem> getMenuFromFile(String path) {
+        List<MenuItem> MenuItems = new ArrayList<>();
+        try (Scanner input = new Scanner(new File(path))) {
+            while (input.hasNext()) // more data to read
+            {
+                String line = input.nextLine();
+                String[] arrayLine = line.split(",");
+                int itemId = Integer.parseInt(arrayLine[0]);
+                int itemType = Integer.parseInt(arrayLine[1]);
+                String itemDescription = arrayLine[2];
+                double itemPrice = Double.parseDouble(arrayLine[3]);
+                MenuItems.add(new MenuItem(itemId, itemType, itemDescription, itemPrice));
+            }
+            input.close();
+        } catch (NoSuchElementException elementException) {
+            System.err.println("File improperly formed. Terminating.");
+        } catch (IllegalStateException stateException) {
+            System.err.println("Error reading from file. Terminating.");
+        } catch (IOException e) {
+            System.err.println("Error processing file. Terminating.");
+            System.exit(1);
+        }
+        return MenuItems;
     }
 }

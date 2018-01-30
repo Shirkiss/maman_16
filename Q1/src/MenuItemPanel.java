@@ -3,11 +3,15 @@ import javax.swing.border.TitledBorder;
 import java.awt.*;
 
 /**
- * Created by shir.cohen on 1/27/2018.
+ * MenuItemPanel.java
+ * Menu item panel that contain the item id, name, type, price.
+ * Each panel let you select the quantity you want to order from each item.
+ *
+ * @author Shir Cohen
  */
-public class MenuItemPanel extends JPanel {
+class MenuItemPanel extends JPanel {
 
-    private JComboBox qunatityCombo = new JComboBox();
+    private JComboBox quantityCombo;
     private int itemId;
     private int itemType;
     private double itemPrice;
@@ -15,7 +19,7 @@ public class MenuItemPanel extends JPanel {
     static final private String[] types = {"Starter", "Main Course", "Desert", "Drink"};
 
 
-    public MenuItemPanel(MenuItem menuItem) {
+    MenuItemPanel(MenuItem menuItem) {
         this.itemId = menuItem.getItemId();
         this.itemType = menuItem.getItemType();
         this.itemPrice = menuItem.getItemPrice();
@@ -23,23 +27,24 @@ public class MenuItemPanel extends JPanel {
 
         setLayout(new FlowLayout(FlowLayout.CENTER, 15, 0));
         TitledBorder title;
-        title = BorderFactory.createTitledBorder("#" + String.valueOf(menuItem.getItemId()) + " " + types[menuItem.getItemType()]);
+        title = BorderFactory.createTitledBorder("#" + String.valueOf(menuItem.getItemId())
+                + " " + types[menuItem.getItemType()]);
         setBorder(title);
-
-
+        //creating quantity dropdown with max of 8 items
+        quantityCombo = new JComboBox();
         for (int i = 0; i < 8; i++)
-            qunatityCombo.addItem(i);
+            quantityCombo.addItem(i);
 
         JLabel description = new JLabel("<html><b>" + menuItem.getItemDescription() + "</b></html>");
         JLabel price = new JLabel("<html><b>" + menuItem.getItemPrice() + "</b></html>");
 
         add(description);
         add(price);
-        add(qunatityCombo);
+        add(quantityCombo);
     }
 
     int getItemQuantity() {
-        return (qunatityCombo.getSelectedIndex());
+        return (quantityCombo.getSelectedIndex());
     }
 
     MenuItem getMenuItem() {
