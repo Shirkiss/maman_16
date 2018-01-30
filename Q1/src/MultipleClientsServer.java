@@ -17,10 +17,9 @@ public class MultipleClientsServer {
         menu = getMenuFromFile("C:\\Users\\shir.cohen\\Desktop\\studies\\Java\\maman16\\src\\menu.txt");
         ServerSocket srv;
         try {
-            srv = new ServerSocket(7777);
+            srv = new ServerSocket(3333);
             System.out.println("Server>> Server ready");
             Socket socket;
-
             while (true) {
                 socket = srv.accept();
                 new EchoThread(socket, menu).start();
@@ -31,7 +30,6 @@ public class MultipleClientsServer {
             e.printStackTrace();
             System.exit(1);
         }
-
     }
 
     private static List<MenuItem> getMenuFromFile(String path) {
@@ -58,6 +56,4 @@ public class MultipleClientsServer {
         }
         return MenuItems;
     }
-
-
 }

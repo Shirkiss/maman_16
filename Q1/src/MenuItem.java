@@ -6,7 +6,7 @@ import java.io.Serializable;
  *
  * @author Shir Cohen
  */
-class MenuItem implements Serializable{
+class MenuItem implements Serializable {
 
     private final int itemId;
     private final int itemType;
