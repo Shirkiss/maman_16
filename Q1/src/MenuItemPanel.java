@@ -13,10 +13,9 @@ class MenuItemPanel extends JPanel {
 
     private JComboBox quantityCombo;
     private int itemId;
-    private int itemType;
+    private String itemType;
     private double itemPrice;
     private String itemDescription;
-    static final private String[] types = {"Starter", "Main Course", "Desert", "Drink"};
 
 
     MenuItemPanel(MenuItem menuItem) {
@@ -28,7 +27,7 @@ class MenuItemPanel extends JPanel {
         setLayout(new FlowLayout(FlowLayout.CENTER, 15, 0));
         TitledBorder title;
         title = BorderFactory.createTitledBorder("#" + String.valueOf(menuItem.getItemId())
-                + " " + types[menuItem.getItemType()]);
+                + " " + menuItem.getItemType());
         setBorder(title);
         //creating quantity dropdown with max of 8 items
         quantityCombo = new JComboBox();
@@ -63,7 +62,7 @@ class MenuItemPanel extends JPanel {
         return itemId;
     }
 
-    int getItemType() {
+    String getItemType() {
         return itemType;
     }
 }

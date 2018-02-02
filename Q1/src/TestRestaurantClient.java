@@ -9,7 +9,7 @@ import javax.swing.*;
 class TestRestaurantClient {
 
     public static void main(String[] args) {
-        RestaurantClientFrame application = new RestaurantClientFrame("localhost", 3333);
+        RestaurantClientFrame application = new RestaurantClientFrame(args[0], 3333);
         application.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         application.pack();
         application.setVisible(true);

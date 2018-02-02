@@ -34,7 +34,7 @@ class RestaurantClientController {
         try {
             //getting the menu items from the server
             return (ArrayList<MenuItem>) in.readObject();
-        } catch (IOException | ClassNotFoundException e) {
+        } catch (IOException | NullPointerException | ClassNotFoundException e ) {
             e.printStackTrace();
         }
         return null;
@@ -93,7 +93,7 @@ class RestaurantClientController {
     Order getOrderDataFromServer() {
         try {
             return (Order) in.readObject();
-        } catch (IOException | ClassNotFoundException e) {
+        } catch (IOException | ClassNotFoundException |NullPointerException e) {
             e.printStackTrace();
         }
         return null;

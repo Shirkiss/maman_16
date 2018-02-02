@@ -47,7 +47,7 @@ public class RestaurantServer {
                 String line = input.nextLine();
                 String[] arrayLine = line.split(",");
                 int itemId = Integer.parseInt(arrayLine[0]);
-                int itemType = Integer.parseInt(arrayLine[1]);
+                String itemType = arrayLine[1];
                 String itemDescription = arrayLine[2];
                 double itemPrice = Double.parseDouble(arrayLine[3]);
                 MenuItems.add(new MenuItem(itemId, itemType, itemDescription, itemPrice));

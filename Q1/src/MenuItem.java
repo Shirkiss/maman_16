@@ -9,12 +9,12 @@ import java.io.Serializable;
 class MenuItem implements Serializable {
 
     private final int itemId;
-    private final int itemType;
+    private final String itemType;
     private final String itemDescription;
     private final double itemPrice;
 
 
-    MenuItem(int itemId, int itemType, String itemDescription, double itemPrice) {
+    MenuItem(int itemId, String itemType, String itemDescription, double itemPrice) {
         this.itemId = itemId;
         this.itemType = itemType;
         this.itemDescription = itemDescription;
@@ -25,7 +25,7 @@ class MenuItem implements Serializable {
         return itemId;
     }
 
-    int getItemType() {
+    String getItemType() {
         return itemType;
     }
 

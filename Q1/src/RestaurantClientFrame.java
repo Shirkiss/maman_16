@@ -171,7 +171,8 @@ class RestaurantClientFrame extends JFrame {
                             showOrder(order); //show the order details that was received from the server
                         else
                             showError(); //show error popup
-                    }
+                    } else
+                        showError();
                 }
         );
         submitButtonPanel.add(submitButton);
